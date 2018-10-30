@@ -1,23 +1,56 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
+    <h5 class="modal-title">{{ modalData.event.title }}</h5>
     <button type="button" class="close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
+    <!--<div>-->
+      <!--&lt;!&ndash;<pre>{{ modalData?.event | json }}</pre>&ndash;&gt;-->
+      <!--<pre>Start day : {{modalData.event.start | date}}</pre>-->
+      <!--<pre>Today : {{today | date}}</pre>-->
+      <!--<pre>End day : {{modalData?.event.end | date}}</pre>-->
+      <!--<pre>Description : {{modalData?.event.meta.description}}</pre>-->
+    <!--</div>-->
+    <!--<div>-->
+      <!--&lt;!&ndash;<pre>{{ modalData?.event | json }}</pre>&ndash;&gt;-->
+      <!--<pre>Start day : {{modalData.event.start | date}}</pre>-->
+      <!--<pre>Today : {{today | date}}</pre>-->
+      <!--<pre>End day : {{modalData?.event.end | date}}</pre>-->
+      <!--<pre>Description : {{modalData?.event.meta.description}}</pre>-->
+      <!--<pre>Result : {{modalData?.event.meta.result}}</pre>-->
+      <!--<pre>Comments : {{modalData?.event.meta.comments}}</pre>-->
+    <!--</div>-->
     <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
-    </div>
-    <div>
-      Event:
-      <pre>{{ modalData?.event | json }}</pre>
+      <pre>Start day : {{modalData.event.start | date}}</pre>
+      <pre>Today : {{today | date}}</pre>
+      <pre>End day : {{modalData?.event.end | date}}</pre>
+      <pre>Description : {{modalData?.event.meta.description}}</pre>
+      <select class="form-control">
+        <option value="0" selected>OK</option>
+        <option value="1">KO</option>
+        <option value="2">Warning</option>
+      </select>
+      <br>
+      <textarea class="form-control" placeholder="Comments"></textarea>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+    <button type="button" class="btn btn-secondary" (click)="close()">OK</button>
+  </div>
+</ng-template>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span style="background-color: grey" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+    <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+  </div>
+  <div style="margin-bottom: 10px">
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{countErrors(day.events)}}</span>
+    <span style="background-color: green" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ countSuccesses(day.events) }}</span>
+    <span style="background-color: orange" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ countWarnings(day.events) }}</span>
   </div>
 </ng-template>
 
@@ -85,7 +118,8 @@
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day)"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
+    (eventTimesChanged)="eventTimesChanged($event)"
+    [cellTemplate]="customCellTemplate">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"

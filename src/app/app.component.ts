@@ -13,6 +13,10 @@ const colors: any = {
     primary: '#1e90ff',
     secondary: '#D1E8FF'
   },
+  green: {
+    primary: '#1a9f56',
+    secondary: '#D1E8FF'
+  },
   yellow: {
     primary: '#e3bc08',
     secondary: '#FDF1BA'
@@ -30,6 +34,8 @@ export class AppComponent {
   modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
+
+  today = new Date();
 
   CalendarView = CalendarView;
 
@@ -70,32 +76,48 @@ export class AppComponent {
         beforeStart: true,
         afterEnd: true
       },
-      draggable: true
+      draggable: true,
+      meta : {
+        type : 0
+      }
     },
     {
       start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
+      end: addDays(new Date(), 3),
+      title: 'Connexion grid',
+      color: colors.red,
+      actions: this.actions,
+      meta: {
+        description: 'Il faut se connecter avec le compte ...',
+        result: 'KO',
+        comments: 'Un commentaire sur le résultat...',
+        type : 0
+      }
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true
+      color: colors.yellow,
+      allDay: true,
+      meta : {
+        type : 1
+      }
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: new Date(),
       title: 'A draggable and resizable event',
-      color: colors.yellow,
+      color: colors.green,
       actions: this.actions,
       resizable: {
         beforeStart: true,
         afterEnd: true
       },
-      draggable: true
+      draggable: true,
+      meta : {
+        type : 2
+      }
     }
   ];
 
@@ -146,5 +168,43 @@ export class AppComponent {
       }
     });
     this.refresh.next();
+  }
+
+  countAllBadges(day): number {
+    console.log(day);
+    return this.countErrors(day.events);
+  }
+
+  countErrors(events): number {
+    let count = 0;
+    events.filter(event => {
+      if (event.meta.hasOwnProperty('type') && event.meta.type === 0) {
+        count++;
+        // console.log(event.title + ' error');
+      }
+    });
+    return count;
+  }
+
+  countWarnings(events): number {
+    let count = 0;
+    events.filter(event => {
+      if (event.meta.hasOwnProperty('type') && event.meta.type === 1) {
+        count++;
+        // console.log(event.title + ' warning');
+      }
+    });
+    return count;
+  }
+
+  countSuccesses(events): number {
+    let count = 0;
+    events.filter(event => {
+      if (event.meta.hasOwnProperty('type') && event.meta.type === 2) {
+        count++;
+        // console.log(event.title + ' success');
+      }
+    });
+    return count;
   }
 }
