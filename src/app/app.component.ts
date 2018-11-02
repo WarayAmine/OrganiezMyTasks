@@ -66,9 +66,9 @@ export class AppComponent {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(startOfDay(new Date()), 1),
+      start: subDays(startOfDay(new Date()), 30),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: 'Connexion financeur et recherche',
       color: colors.red,
       actions: this.actions,
       allDay: true,
@@ -97,7 +97,7 @@ export class AppComponent {
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      title: 'Rapport 5 rempli',
       color: colors.yellow,
       allDay: true,
       meta : {
@@ -107,7 +107,7 @@ export class AppComponent {
     {
       start: addHours(startOfDay(new Date()), 2),
       end: new Date(),
-      title: 'A draggable and resizable event',
+      title: 'Accès au reporting',
       color: colors.green,
       actions: this.actions,
       resizable: {
@@ -126,7 +126,7 @@ export class AppComponent {
   constructor(private modal: NgbModal) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
+    // if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -136,7 +136,7 @@ export class AppComponent {
       } else {
         this.activeDayIsOpen = true;
       }
-    }
+    // }
   }
 
   eventTimesChanged({
@@ -170,17 +170,11 @@ export class AppComponent {
     this.refresh.next();
   }
 
-  countAllBadges(day): number {
-    console.log(day);
-    return this.countErrors(day.events);
-  }
-
   countErrors(events): number {
     let count = 0;
     events.filter(event => {
       if (event.meta.hasOwnProperty('type') && event.meta.type === 0) {
         count++;
-        // console.log(event.title + ' error');
       }
     });
     return count;
@@ -206,5 +200,18 @@ export class AppComponent {
       }
     });
     return count;
+  }
+
+  toShow(date): boolean {
+    console.log(date.getTime());
+    console.log('TODAY : ' + this.today.getTime());
+    if (date.getTime() <= this.today.getTime()) {
+      return true;
+    }
+    return false;
+  }
+
+  show(element) {
+    console.log(element);
   }
 }

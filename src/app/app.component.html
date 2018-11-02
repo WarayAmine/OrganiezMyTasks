@@ -47,8 +47,8 @@
     <span style="background-color: grey" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
     <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
   </div>
-  <div style="margin-bottom: 10px">
-    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{countErrors(day.events)}}</span>
+  <div style="margin-bottom: 10px" *ngIf="toShow(day.date)">
+    <span class="cal-day-badge" *ngIf="(day.badgeTotal > 0)" >{{countErrors(day.events)}}</span>
     <span style="background-color: green" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ countSuccesses(day.events) }}</span>
     <span style="background-color: orange" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ countWarnings(day.events) }}</span>
   </div>
