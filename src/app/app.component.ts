@@ -2,7 +2,7 @@ import {  Component,  ChangeDetectionStrategy,  ViewChild,  TemplateRef } from '
 import {  startOfDay,  endOfDay,  subDays,  addDays,  endOfMonth,  isSameDay,  isSameMonth,  addHours} from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {  CalendarEvent,  CalendarEventAction,  CalendarEventTimesChangedEvent,  CalendarView} from 'angular-calendar';
+import {  CalendarEvent,  CalendarEventAction,  CalendarEventTimesChangedEvent,  CalendarView, DAYS_OF_WEEK} from 'angular-calendar';
 
 const colors: any = {
   red: {
@@ -45,6 +45,12 @@ export class AppComponent {
     action: string;
     event: CalendarEvent;
   };
+
+  // exclude weekends
+  // 0 : sunday - 6 : saturday
+  excludeDays: number[] = [0, 6];
+
+  weekStartsOn = DAYS_OF_WEEK.SUNDAY;
 
   actions: CalendarEventAction[] = [
     {

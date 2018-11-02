@@ -62,7 +62,8 @@
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false">
+        (viewDateChange)="activeDayIsOpen = false"
+        [excludeDays]="excludeDays">
         Previous
       </div>
       <div
@@ -76,13 +77,14 @@
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false">
+        (viewDateChange)="activeDayIsOpen = false"
+        [excludeDays]="excludeDays">
         Next
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' :weekStartsOn:excludeDays}}</h3>
   </div>
   <div class="col-md-4">
     <div class="btn-group">
@@ -119,7 +121,8 @@
     (dayClicked)="dayClicked($event.day)"
     (eventClicked)="handleEvent('Clicked', $event.event)"
     (eventTimesChanged)="eventTimesChanged($event)"
-    [cellTemplate]="customCellTemplate">
+    [cellTemplate]="customCellTemplate"
+    [excludeDays]="excludeDays">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"
@@ -127,7 +130,8 @@
     [events]="events"
     [refresh]="refresh"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
+    (eventTimesChanged)="eventTimesChanged($event)"
+    [excludeDays]="excludeDays">
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
     *ngSwitchCase="CalendarView.Day"
