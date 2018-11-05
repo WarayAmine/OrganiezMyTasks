@@ -76,7 +76,7 @@ export class AppComponent {
   // 0 : sunday - 6 : saturday
   excludeDays: number[] = [0, 6];
 
-  weekStartsOn = DAYS_OF_WEEK.SUNDAY;
+  weekStartsOn = DAYS_OF_WEEK.MONDAY;
 
   actions: CalendarEventAction[] = [
     {
@@ -106,9 +106,9 @@ export class AppComponent {
       },
       rrule: new RRule({
         freq: RRule.WEEKLY,
-        dtstart: subDays(startOfDay(new Date()), 40),
-        // until: addDays(new Date(), 30),
-        count: 40,
+        dtstart: subDays(new Date(), 60),
+        until: addDays(new Date(), 200),
+        // count: 40,
         byweekday: RRule.MO
       }),
     }
