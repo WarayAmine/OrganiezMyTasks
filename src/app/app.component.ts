@@ -7,7 +7,7 @@ import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
-  CalendarMonthViewBeforeRenderEvent,
+  CalendarMonthViewBeforeRenderEvent, CalendarMonthViewDay,
   CalendarView, CalendarWeekViewBeforeRenderEvent,
   DAYS_OF_WEEK
 } from 'angular-calendar';

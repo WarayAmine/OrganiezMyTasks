@@ -44,21 +44,28 @@
 
 <ng-template #customCellTemplate let-day="day" let-locale="locale">
   <div class="cal-cell-top">
-    <span style="background-color: grey" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+    <span class="cal-day-badge bg-dark " *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
     <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
   </div>
-  <div style="margin-bottom: 10px" *ngIf="toShow(day.date)">
-    <span class="cal-day-badge" *ngIf="(day.badgeTotal > 0)" >{{countErrors(day.events)}}</span>
-    <span style="background-color: green" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ countSuccesses(day.events) }}</span>
-    <span style="background-color: orange" class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ countWarnings(day.events) }}</span>
+  <div class="cell-totals" *ngIf="toShow(day.date)">
+    <span class="badge badge-{{'danger'}}" *ngIf="(day.badgeTotal > 0)" >{{countErrors(day.events)}}</span>
+    <span class="badge badge-{{'success '}}" *ngIf="day.badgeTotal > 0">{{ countSuccesses(day.events) }}</span>
+    <span class="badge badge-{{'warning'}}" *ngIf="day.badgeTotal > 0">{{ countWarnings(day.events) }}</span>
   </div>
+  <!--<div class="cell-totals">-->
+    <!--<span-->
+      <!--*ngFor="let group of day.eventGroups"-->
+      <!--class="badge badge-{{ group[0] }}">-->
+      <!--{{ group[1].length }}-->
+    <!--</span>-->
+  <!--</div>-->
 </ng-template>
 
 <div class="row text-center">
   <div class="col-md-4">
     <div class="btn-group">
       <div
-        class="btn btn-primary"
+        class="btn btn-dark"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -67,13 +74,13 @@
         Previous
       </div>
       <div
-        class="btn btn-outline-secondary"
+        class="btn btn-outline-secondary text-dark"
         mwlCalendarToday
         [(viewDate)]="viewDate">
         Today
       </div>
       <div
-        class="btn btn-primary"
+        class="btn btn-dark"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -89,19 +96,19 @@
   <div class="col-md-4">
     <div class="btn-group">
       <div
-        class="btn btn-primary"
+        class="btn btn-dark"
         (click)="view = CalendarView.Month"
         [class.active]="view === CalendarView.Month">
         Month
       </div>
       <div
-        class="btn btn-primary"
+        class="btn btn-dark"
         (click)="view = CalendarView.Week"
         [class.active]="view === CalendarView.Week">
         Week
       </div>
       <div
-        class="btn btn-primary"
+        class="btn btn-dark"
         (click)="view = CalendarView.Day"
         [class.active]="view === CalendarView.Day">
         Day
