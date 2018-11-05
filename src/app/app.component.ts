@@ -1,8 +1,18 @@
-import {  Component,  ChangeDetectionStrategy,  ViewChild,  TemplateRef } from '@angular/core';
+import {Component, ChangeDetectionStrategy, ViewChild, TemplateRef, ChangeDetectorRef} from '@angular/core';
 import {  startOfDay,  endOfDay,  subDays,  addDays,  endOfMonth,  isSameDay,  isSameMonth,  addHours} from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {  CalendarEvent,  CalendarEventAction,  CalendarEventTimesChangedEvent,  CalendarView, DAYS_OF_WEEK} from 'angular-calendar';
+import {
+  CalendarDayViewBeforeRenderEvent,
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent,
+  CalendarMonthViewBeforeRenderEvent,
+  CalendarView, CalendarWeekViewBeforeRenderEvent,
+  DAYS_OF_WEEK
+} from 'angular-calendar';
+import { ViewPeriod } from 'calendar-utils';
+import { RRule} from 'rrule';
 
 const colors: any = {
   red: {
@@ -23,6 +33,21 @@ const colors: any = {
   }
 };
 
+interface RecurringEvent {
+  title: string;
+  color?: any;
+  start?: Date;
+  end?: Date;
+  allday?: boolean;
+  rrule?: RRule;
+  meta?: {
+    description?: string,
+    result?: any,
+    comments?: string,
+    type?: any
+  };
+}
+
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,6 +65,7 @@ export class AppComponent {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+  viewPeriod: ViewPeriod;
 
   modalData: {
     action: string;
@@ -70,7 +96,25 @@ export class AppComponent {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
+  recurringEvents: RecurringEvent[] = [
+    {
+      title: 'Tache reccurente',
+      color: colors.yellow,
+      meta: {
+        description: 'Une date pour la tache reccurente',
+        type : 0
+      },
+      rrule: new RRule({
+        freq: RRule.WEEKLY,
+        dtstart: subDays(startOfDay(new Date()), 40),
+        // until: addDays(new Date(), 30),
+        count: 40,
+        byweekday: RRule.MO
+      }),
+    }
+  ];
+
+  unitaryEvents: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 30),
       end: addDays(new Date(), 1),
@@ -127,12 +171,14 @@ export class AppComponent {
     }
   ];
 
+  events: CalendarEvent[] = this.unitaryEvents;
+
   activeDayIsOpen = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private cdr: ChangeDetectorRef) {}
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    // if (isSameMonth(date, this.viewDate)) {
+    if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -142,7 +188,7 @@ export class AppComponent {
       } else {
         this.activeDayIsOpen = true;
       }
-    // }
+    }
   }
 
   eventTimesChanged({
@@ -159,6 +205,45 @@ export class AppComponent {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  updateCalendarEvents(
+    viewRender:
+      | CalendarMonthViewBeforeRenderEvent
+      | CalendarWeekViewBeforeRenderEvent
+      | CalendarDayViewBeforeRenderEvent
+  ): void {
+    if (
+      !this.viewPeriod ||
+      !isSameDay(this.viewPeriod.start, viewRender.period.start) ||
+      !isSameDay(this.viewPeriod.end, viewRender.period.end)
+    ) {
+      this.viewPeriod = viewRender.period;
+      // this.calendarEvents = [];
+      console.log('events : ' + this.events.length);
+      console.log('events without others : ' + this.events.filter((element) => !this.recurringEvents.includes(element)).length);
+      this.events = [];
+      this.unitaryEvents.forEach(event => {
+        this.events.push(event);
+      })
+      this.recurringEvents.forEach(event => {
+        // const rule: RRule = new RRule({
+        //   ...event.rrule,
+        //   dtstart: startOfDay(viewRender.period.start),
+        //   until: endOfDay(viewRender.period.end)
+        // });
+        const { title, color, meta} = event;
+        event.rrule.all().forEach(date => {
+          this.events.push({
+            title,
+            color,
+            start: date,
+            meta
+          });
+        });
+      });
+      this.cdr.detectChanges();
+    }
   }
 
   addEvent(): void {
@@ -191,7 +276,6 @@ export class AppComponent {
     events.filter(event => {
       if (event.meta.hasOwnProperty('type') && event.meta.type === 1) {
         count++;
-        // console.log(event.title + ' warning');
       }
     });
     return count;
@@ -202,15 +286,12 @@ export class AppComponent {
     events.filter(event => {
       if (event.meta.hasOwnProperty('type') && event.meta.type === 2) {
         count++;
-        // console.log(event.title + ' success');
       }
     });
     return count;
   }
 
   toShow(date): boolean {
-    console.log(date.getTime());
-    console.log('TODAY : ' + this.today.getTime());
     if (date.getTime() <= this.today.getTime()) {
       return true;
     }

@@ -122,7 +122,8 @@
     (eventClicked)="handleEvent('Clicked', $event.event)"
     (eventTimesChanged)="eventTimesChanged($event)"
     [cellTemplate]="customCellTemplate"
-    [excludeDays]="excludeDays">
+    [excludeDays]="excludeDays"
+    (beforeViewRender)="updateCalendarEvents($event)">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"
@@ -131,7 +132,8 @@
     [refresh]="refresh"
     (eventClicked)="handleEvent('Clicked', $event.event)"
     (eventTimesChanged)="eventTimesChanged($event)"
-    [excludeDays]="excludeDays">
+    [excludeDays]="excludeDays"
+    (beforeViewRender)="updateCalendarEvents($event)">
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
     *ngSwitchCase="CalendarView.Day"
@@ -139,7 +141,8 @@
     [events]="events"
     [refresh]="refresh"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
+    (eventTimesChanged)="eventTimesChanged($event)"
+    (beforeViewRender)="updateCalendarEvents($event)">
   </mwl-calendar-day-view>
 </div>
 
