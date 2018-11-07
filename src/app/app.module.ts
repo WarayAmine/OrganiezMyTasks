@@ -8,10 +8,12 @@ import {FormsModule} from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AddRecurringEventComponent } from './add-recurring-event/add-recurring-event.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddRecurringEventComponent
   ],
   imports: [
     BrowserModule,

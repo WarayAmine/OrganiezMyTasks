@@ -24,9 +24,9 @@
       <!--<pre>Comments : {{modalData?.event.meta.comments}}</pre>-->
     <!--</div>-->
     <div>
-      <pre>Start day : {{modalData.event.start | date}}</pre>
-      <pre>Today : {{today | date}}</pre>
-      <pre>End day : {{modalData?.event.end | date}}</pre>
+      <pre>Début : {{modalData.event.start | date}}</pre>
+      <pre>Aujourd'hui : {{today | date}}</pre>
+      <pre>Fin : {{modalData?.event.end | date}}</pre>
       <pre>Description : {{modalData?.event.meta.description}}</pre>
       <select class="form-control">
         <option value="0" selected>OK</option>
@@ -48,9 +48,9 @@
     <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
   </div>
   <div class="cell-totals" *ngIf="toShow(day.date)">
-    <span class="badge badge-{{'danger'}}" *ngIf="(day.badgeTotal > 0)" >{{countErrors(day.events)}}</span>
-    <span class="badge badge-{{'success '}}" *ngIf="day.badgeTotal > 0">{{ countSuccesses(day.events) }}</span>
-    <span class="badge badge-{{'warning'}}" *ngIf="day.badgeTotal > 0">{{ countWarnings(day.events) }}</span>
+    <span class="badge badge-danger" *ngIf="(day.badgeTotal > 0)" >{{countErrors(day.events)}}</span>
+    <span class="badge badge-success" *ngIf="day.badgeTotal > 0">{{ countSuccesses(day.events) }}</span>
+    <span class="badge badge-warning" *ngIf="day.badgeTotal > 0">{{ countWarnings(day.events) }}</span>
   </div>
   <!--<div class="cell-totals">-->
     <!--<span-->
@@ -71,13 +71,13 @@
         [(viewDate)]="viewDate"
         (viewDateChange)="activeDayIsOpen = false"
         [excludeDays]="excludeDays">
-        Previous
+        Précédent
       </div>
       <div
         class="btn btn-outline-secondary text-dark"
         mwlCalendarToday
         [(viewDate)]="viewDate">
-        Today
+        Aujourd'hui
       </div>
       <div
         class="btn btn-dark"
@@ -86,7 +86,7 @@
         [(viewDate)]="viewDate"
         (viewDateChange)="activeDayIsOpen = false"
         [excludeDays]="excludeDays">
-        Next
+        Suivant
       </div>
     </div>
   </div>
@@ -99,19 +99,19 @@
         class="btn btn-dark"
         (click)="view = CalendarView.Month"
         [class.active]="view === CalendarView.Month">
-        Month
+        Mois
       </div>
       <div
         class="btn btn-dark"
         (click)="view = CalendarView.Week"
         [class.active]="view === CalendarView.Week">
-        Week
+        Semaine
       </div>
       <div
         class="btn btn-dark"
         (click)="view = CalendarView.Day"
         [class.active]="view === CalendarView.Day">
-        Day
+        Jour
       </div>
     </div>
   </div>
@@ -152,4 +152,8 @@
     (beforeViewRender)="updateCalendarEvents($event)">
   </mwl-calendar-day-view>
 </div>
-
+<div class="d-flex" style="margin-top:30px;width: 30rem;justify-content: space-evenly">
+  <button class="btn btn-dark col-md-4" (click)="toggleForms(0)">Tâche récurrente</button>
+  <button class="btn btn-dark col-md-4" (click)="toggleForms(1)">Tâche unitaire</button>
+</div>
+<app-add-recurring-event *ngIf="reccurentEventForm"></app-add-recurring-event>

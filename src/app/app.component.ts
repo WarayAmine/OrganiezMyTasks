@@ -78,6 +78,9 @@ export class AppComponent {
 
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
 
+  reccurentEventForm = false;
+  unitaryEventForm = false;
+
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fa fa-fw fa-pencil"></i>',
@@ -300,5 +303,15 @@ export class AppComponent {
 
   show(element) {
     console.log(element);
+  }
+
+  toggleForms(x: number): void {
+    if (x === 0) {
+      this.unitaryEventForm = false;
+      this.reccurentEventForm = !this.reccurentEventForm;
+    } else {
+      this.reccurentEventForm = false;
+      this.unitaryEventForm = !this.unitaryEventForm;
+    }
   }
 }
