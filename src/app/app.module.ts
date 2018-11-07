@@ -9,15 +9,19 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AddRecurringEventComponent } from './add-recurring-event/add-recurring-event.component';
+import { AddUnitaryEventComponent } from './add-unitary-event/add-unitary-event.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddRecurringEventComponent
+    AddRecurringEventComponent,
+    AddUnitaryEventComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    NgbModule.forRoot(),
     BrowserAnimationsModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),

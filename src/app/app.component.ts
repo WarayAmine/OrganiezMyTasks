@@ -78,8 +78,12 @@ export class AppComponent {
 
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
 
+  isCollapsedRecurrent = false;
+  isCollapsedUnitary = false;
+  isCollapsed = false;
   reccurentEventForm = false;
   unitaryEventForm = false;
+  deleteUpdateEventTable = false;
 
   actions: CalendarEventAction[] = [
     {
@@ -228,7 +232,7 @@ export class AppComponent {
       this.events = [];
       this.unitaryEvents.forEach(event => {
         this.events.push(event);
-      })
+      });
       this.recurringEvents.forEach(event => {
         // const rule: RRule = new RRule({
         //   ...event.rrule,
@@ -308,10 +312,16 @@ export class AppComponent {
   toggleForms(x: number): void {
     if (x === 0) {
       this.unitaryEventForm = false;
+      this.deleteUpdateEventTable = false;
       this.reccurentEventForm = !this.reccurentEventForm;
+    } else if( x === 1) {
+      this.reccurentEventForm = false;
+      this.deleteUpdateEventTable = false;
+      this.unitaryEventForm = !this.unitaryEventForm;
     } else {
       this.reccurentEventForm = false;
-      this.unitaryEventForm = !this.unitaryEventForm;
+      this.unitaryEventForm = false;
+      this.deleteUpdateEventTable = !this.deleteUpdateEventTable;
     }
   }
 }

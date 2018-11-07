@@ -1,0 +1,124 @@
+<div class="card col-10" style="margin-left:30px;margin-top: 30px;margin-bottom: 30px;">
+  <div class="card-body">
+    <h3 class="card-title">Ajouter une tâche unitaire</h3>
+    <form>
+      <div class="form-group">
+        <label for="eventTitle">Nom</label>
+        <input type="text" class="form-control" id="eventTitle" placeholder="tâche unitaire">
+      </div>
+      <div class="form-group">
+        <label for="eventDescription">Description</label>
+        <textarea class="form-control" id="eventDescription"></textarea>
+      </div>
+      <!--<div class="form-group">-->
+        <!--<fieldset class="form-group row">-->
+          <!--<legend class="col-form-label col-sm-2">Fréquence</legend>-->
+          <!--<div class="col-sm-8">-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="radio" name="freqRadios" id="freqRadioYearly" value="optionYearly">-->
+              <!--<label class="form-check-label" for="freqRadioYearly">-->
+                <!--Annuelle-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="radio" name="freqRadios" id="freqRadioMonthly" value="optionMonthly">-->
+              <!--<label class="form-check-label" for="freqRadioMonthly">-->
+                <!--Mensuelle-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline disabled">-->
+              <!--<input class="form-check-input" type="radio" name="freqRadios" id="freqRadioWeekly" value="optionWeekly" >-->
+              <!--<label class="form-check-label" for="freqRadioWeekly">-->
+                <!--Hebdomadaire-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="radio" name="freqRadios" id="freqRadioDaily" value="optionDaily" checked>-->
+              <!--<label class="form-check-label" for="freqRadioDaily">-->
+                <!--Quotidienne-->
+              <!--</label>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</fieldset>-->
+      <!--</div>-->
+      <div class="d-flex" style="justify-content: space-evenly; width: 30rem;">
+        <div class="form-group col-6"  >
+          <label for="eventStart">Début</label>
+          <input
+            id="eventStart"
+            class="form-control "
+            type="text"
+            mwlFlatpickr
+            (ngModelChange)="refresh.next()"
+            [altInput]="true"
+            [convertModelValue]="true"
+            [enableTime]="true"
+            dateFormat="Y-m-dTH:i"
+            altFormat="F j, Y H:i"
+            placeholder="Not set">
+        </div>
+        <div class="form-group col-6" style="margin-left: 15px;">
+          <label for="eventEnd">Fin</label>
+          <input
+            id="eventEnd"
+            class="form-control "
+            type="text"
+            mwlFlatpickr
+            (ngModelChange)="refresh.next()"
+            [altInput]="true"
+            [convertModelValue]="true"
+            [enableTime]="true"
+            dateFormat="Y-m-dTH:i"
+            altFormat="F j, Y H:i"
+            placeholder="Not set">
+        </div>
+      </div>
+      <!--<div class="form-group row">-->
+        <!--<label for="example-number-input" class="col-sm-2 col-form-label">Intervalle</label>-->
+        <!--<div class="col-sm-2">-->
+          <!--<input class="form-control" type="number" value="1" id="example-number-input">-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<fieldset class="form-group row">-->
+          <!--<legend class="col-form-label col-sm-2">Jour</legend>-->
+          <!--<div class="col-sm-8">-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="checkbox" name="intrevalCheckBox" id="intrevalCheckBoxLundi" value="optionLundi" checked>-->
+              <!--<label class="form-check-label" for="intrevalCheckBoxLundi">-->
+                <!--Lundi-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="checkbox" name="intrevalCheckBox" id="intrevalCheckBoxMardi" value="optionMardi">-->
+              <!--<label class="form-check-label" for="intrevalCheckBoxMardi">-->
+                <!--Mardi-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline disabled">-->
+              <!--<input class="form-check-input" type="checkbox" name="intrevalCheckBox" id="intrevalCheckBoxMercredi" value="optionMercredi" >-->
+              <!--<label class="form-check-label" for="intrevalCheckBoxMercredi">-->
+                <!--Mercredi-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="checkbox" name="intrevalCheckBox" id="intrevalCheckBoxJeudi" value="optionJeudi">-->
+              <!--<label class="form-check-label" for="intrevalCheckBoxJeudi">-->
+                <!--Jeudi-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div class="form-check form-check-inline">-->
+              <!--<input class="form-check-input" type="checkbox" name="intrevalCheckBox" id="intrevalCheckBoxVendredi" value="optionVendredi">-->
+              <!--<label class="form-check-label" for="intrevalCheckBoxVendredi">-->
+                <!--Vendredi-->
+              <!--</label>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</fieldset>-->
+      <!--</div>-->
+      <div tyle="width: 15rem;">
+        <button type="submit" class="btn btn-dark">Ajouter</button>
+      </div>
+    </form>
+  </div>
+</div>
