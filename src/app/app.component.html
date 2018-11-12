@@ -159,88 +159,185 @@
   </mwl-calendar-day-view>
 </div>
 <br>
-<div class="card col-10" style="margin-left:10px;margin-bottom: 10px;">
-  <div class="card-body">
-    <h6 class="card-title">Ajouter - Modifier/Supprimer</h6>
-    <div class="btn-group" >
-      <button class="btn btn-outline-dark " (click)="toggleForms(0)">Ajouter tâche récurrente</button>
-      <button style="margin-left: 10px;" class="btn btn-outline-dark " (click)="toggleForms(1)">Ajouter tâche unitaire</button>
-      <button style="margin-left: 10px;" class="btn btn-outline-dark " (click)="toggleForms(2)">Modifier/Supprimer</button>
+<div class="card " style="margin-left:10px;margin-bottom: 10px;">
+  <h5 class="card-title" style="margin: 5px">Ajouter - Modifier/Supprimer</h5>
+  <div class="card-body" style="display: flex; flex-direction: column">
+    <div class="btn-group " style="display: flex; flex-direction: row; flex-wrap: wrap">
+      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(0)">Ajouter tâche récurrente</button>
+      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(1)">Ajouter tâche unitaire</button>
+      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(2)">Modifier/Supprimer tâche récurrente</button>
+      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(3)">Modifier/Supprimer tâche unitaire</button>
     </div>
-    <app-add-recurring-event *ngIf="reccurentEventForm"></app-add-recurring-event>
-    <app-add-unitary-event *ngIf="unitaryEventForm"></app-add-unitary-event>
-    <table class="table table-bordered" style="margin-top: 30px;" *ngIf="deleteUpdateEventTable">
-      <thead>
-      <tr>
-        <th>Title</th>
-        <th>Primary color</th>
-        <th>Secondary color</th>
-        <th>Starts at</th>
-        <th>Ends at</th>
-        <th>Remove</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <tr *ngFor="let event of events; let index = index">
-        <td>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="event.title"
-            (keyup)="refresh.next()">
-        </td>
-        <td>
-          <input
-            type="color"
-            [(ngModel)]="event.color.primary"
-            (change)="refresh.next()">
-        </td>
-        <td>
-          <input
-            type="color"
-            [(ngModel)]="event.color.secondary"
-            (change)="refresh.next()">
-        </td>
-        <td>
-          <input
-            class="form-control"
-            type="text"
-            mwlFlatpickr
-            [(ngModel)]="event.start"
-            (ngModelChange)="refresh.next()"
-            [altInput]="true"
-            [convertModelValue]="true"
-            [enableTime]="true"
-            dateFormat="Y-m-dTH:i"
-            altFormat="F j, Y H:i"
-            placeholder="Not set">
-        </td>
-        <td>
-          <input
-            class="form-control"
-            type="text"
-            mwlFlatpickr
-            [(ngModel)]="event.end"
-            (ngModelChange)="refresh.next()"
-            [altInput]="true"
-            [convertModelValue]="true"
-            [enableTime]="true"
-            dateFormat="Y-m-dTH:i"
-            altFormat="F j, Y H:i"
-            placeholder="Not set">
-        </td>
-        <td>
-          <button
-            class="btn btn-danger"
-            (click)="events.splice(index, 1); refresh.next()">
-            Delete
-          </button>
-        </td>
-      </tr>
-      </tbody>
-
-    </table>
+    <div>
+      <app-add-recurring-event *ngIf="reccurentEventForm"></app-add-recurring-event>
+      <app-add-unitary-event *ngIf="unitaryEventForm"></app-add-unitary-event>
+      <div class="card" style="margin-top:30px;" *ngIf="deleteUpdateRecurringEventTable">
+        <div class="card-body">
+          <h3 class="card-title">Les tâches récurrentes</h3>
+          <table class="table table-bordered " style="margin-top: 20px;" >
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Primary color</th>
+              <th>Secondary color</th>
+              <th>Starts at</th>
+              <th>Ends at</th>
+              <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let event of events; let index = index">
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="event.title"
+                  (keyup)="refresh.next()">
+              </td>
+              <td>
+                <input
+                  type="color"
+                  [(ngModel)]="event.color.primary"
+                  (change)="refresh.next()">
+              </td>
+              <td>
+                <input
+                  type="color"
+                  [(ngModel)]="event.color.secondary"
+                  (change)="refresh.next()">
+              </td>
+              <td>
+                <input
+                  class="form-control"
+                  type="text"
+                  mwlFlatpickr
+                  [(ngModel)]="event.start"
+                  (ngModelChange)="refresh.next()"
+                  [altInput]="true"
+                  [convertModelValue]="true"
+                  [enableTime]="true"
+                  dateFormat="Y-m-dTH:i"
+                  altFormat="F j, Y H:i"
+                  placeholder="Not set">
+              </td>
+              <td>
+                <input
+                  class="form-control"
+                  type="text"
+                  mwlFlatpickr
+                  [(ngModel)]="event.end"
+                  (ngModelChange)="refresh.next()"
+                  [altInput]="true"
+                  [convertModelValue]="true"
+                  [enableTime]="true"
+                  dateFormat="Y-m-dTH:i"
+                  altFormat="F j, Y H:i"
+                  placeholder="Not set">
+              </td>
+              <td>
+                <button
+                  class="btn btn-danger"
+                  (click)="events.splice(index, 1); refresh.next()">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:30px;" *ngIf="deleteUpdateUnitaryEventTable">
+        <div class="card-body">
+          <h3 class="card-title">Les tâches unitaires</h3>
+          <table class="table table-bordered" style="margin-top: 20px;" >
+            <thead>
+            <tr>
+              <th>Titre</th>
+              <!--<th>Primary color</th>-->
+              <!--<th>Secondary color</th>-->
+              <th>Début</th>
+              <th>Fin</th>
+              <th>Description</th>
+              <!--<th>Résultat</th>-->
+              <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let event of unitaryEvents; let index = index">
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="event.title"
+                  (keyup)="refresh.next()">
+              </td>
+              <!--<td>-->
+              <!--<input-->
+              <!--type="color"-->
+              <!--[(ngModel)]="event.color.primary"-->
+              <!--(change)="refresh.next()">-->
+              <!--</td>-->
+              <!--<td>-->
+              <!--<input-->
+              <!--type="color"-->
+              <!--[(ngModel)]="event.color.secondary"-->
+              <!--(change)="refresh.next()">-->
+              <!--</td>-->
+              <td>
+                <input
+                  class="form-control"
+                  type="text"
+                  mwlFlatpickr
+                  [(ngModel)]="event.start"
+                  (ngModelChange)="refresh.next()"
+                  [altInput]="true"
+                  [convertModelValue]="true"
+                  [enableTime]="true"
+                  dateFormat="Y-m-dTH:i"
+                  altFormat="F j, Y H:i"
+                  placeholder="Not set">
+              </td>
+              <td>
+                <input
+                  class="form-control"
+                  type="text"
+                  mwlFlatpickr
+                  [(ngModel)]="event.end"
+                  (ngModelChange)="refresh.next()"
+                  [altInput]="true"
+                  [convertModelValue]="true"
+                  [enableTime]="true"
+                  dateFormat="Y-m-dTH:i"
+                  altFormat="F j, Y H:i"
+                  placeholder="Not set">
+              </td>
+              <td>
+                <textarea
+                 class="form-control"
+                 [(ngModel)]="event.meta.description"
+                 (keyup)="refresh.next()">
+                </textarea>
+              </td>
+              <!--<td>-->
+                <!--<select class="form-control">-->
+                  <!--<option value="0">OK</option>-->
+                  <!--<option value="1">KO</option>-->
+                  <!--<option value="2">Warning</option>-->
+                <!--</select>-->
+              <!--</td>-->
+              <td>
+                <button
+                  class="btn btn-danger"
+                  (click)="events.splice(index, 1); refresh.next()">
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

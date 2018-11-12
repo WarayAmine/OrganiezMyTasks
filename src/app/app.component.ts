@@ -13,6 +13,7 @@ import {
 } from 'angular-calendar';
 import { ViewPeriod } from 'calendar-utils';
 import { RRule} from 'rrule';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 const colors: any = {
   red: {
@@ -84,6 +85,8 @@ export class AppComponent {
   reccurentEventForm = false;
   unitaryEventForm = false;
   deleteUpdateEventTable = false;
+  deleteUpdateRecurringEventTable = false;
+  deleteUpdateUnitaryEventTable = false;
 
   actions: CalendarEventAction[] = [
     {
@@ -309,19 +312,33 @@ export class AppComponent {
     console.log(element);
   }
 
+  getRecurringFromEvents(element, index, array) {
+    if (element.rrule) {
+      return element;
+    }
+  }
+
   toggleForms(x: number): void {
     if (x === 0) {
       this.unitaryEventForm = false;
-      this.deleteUpdateEventTable = false;
+      this.deleteUpdateRecurringEventTable = false;
+      this.deleteUpdateUnitaryEventTable = false;
       this.reccurentEventForm = !this.reccurentEventForm;
-    } else if( x === 1) {
+    } else if ( x === 1) {
       this.reccurentEventForm = false;
-      this.deleteUpdateEventTable = false;
+      this.deleteUpdateRecurringEventTable = false;
+      this.deleteUpdateUnitaryEventTable = false;
       this.unitaryEventForm = !this.unitaryEventForm;
-    } else {
+    } else if ( x === 2) {
       this.reccurentEventForm = false;
       this.unitaryEventForm = false;
-      this.deleteUpdateEventTable = !this.deleteUpdateEventTable;
+      this.deleteUpdateUnitaryEventTable = false;
+      this.deleteUpdateRecurringEventTable = !this.deleteUpdateRecurringEventTable;
+    } else if ( x === 3) {
+      this.reccurentEventForm = false;
+      this.unitaryEventForm = false;
+      this.deleteUpdateRecurringEventTable = false;
+      this.deleteUpdateUnitaryEventTable = !this.deleteUpdateUnitaryEventTable;
     }
   }
 }
