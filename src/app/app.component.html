@@ -66,7 +66,7 @@
     <div class="btn-group">
       <div
         class="btn btn-dark"
-        style="margin-left: 10px;"
+        style="margin: 1px;"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -75,15 +75,15 @@
         Précédent
       </div>
       <div
-        class="btn btn-outline-secondary text-dark"
-        style="margin-left: 10px;"
+        class="btn btn-dark"
+        style="margin: 1px;"
         mwlCalendarToday
         [(viewDate)]="viewDate">
         Aujourd'hui
       </div>
       <div
         class="btn btn-dark"
-        style="margin-left: 10px;"
+        style="margin: 1px;"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -100,21 +100,21 @@
     <div class="btn-group">
       <div
         class="btn btn-dark"
-        style="margin-left: 10px;"
+        style="margin: 1px;"
         (click)="view = CalendarView.Month"
         [class.active]="view === CalendarView.Month">
         Mois
       </div>
       <div
         class="btn btn-dark"
-        style="margin-left: 10px;"
+        style="margin: 1px;"
         (click)="view = CalendarView.Week"
         [class.active]="view === CalendarView.Week">
         Semaine
       </div>
       <div
         class="btn btn-dark"
-        style="margin-left: 10px;"
+        style="margin: 1px;"
         (click)="view = CalendarView.Day"
         [class.active]="view === CalendarView.Day">
         Jour
@@ -160,7 +160,7 @@
 </div>
 <br>
 <div class="card " style="margin-left:10px;margin-bottom: 10px;">
-  <h5 class="card-title" style="margin: 5px">Ajouter - Modifier/Supprimer</h5>
+  <h5 class="card-title" style="margin: 5px">Ajouter - Modifier - Supprimer</h5>
   <div class="card-body" style="display: flex; flex-direction: column">
     <div class="btn-group " style="display: flex; flex-direction: row; flex-wrap: wrap">
       <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(0)">Ajouter tâche récurrente</button>
@@ -255,8 +255,7 @@
               <th>Titre</th>
               <!--<th>Primary color</th>-->
               <!--<th>Secondary color</th>-->
-              <th>Début</th>
-              <th>Fin</th>
+              <th>Date/Heure</th>
               <th>Description</th>
               <!--<th>Résultat</th>-->
               <th>Supprimer</th>
@@ -283,33 +282,37 @@
               <!--[(ngModel)]="event.color.secondary"-->
               <!--(change)="refresh.next()">-->
               <!--</td>-->
-              <td>
-                <input
-                  class="form-control"
-                  type="text"
-                  mwlFlatpickr
-                  [(ngModel)]="event.start"
-                  (ngModelChange)="refresh.next()"
-                  [altInput]="true"
-                  [convertModelValue]="true"
-                  [enableTime]="true"
-                  dateFormat="Y-m-dTH:i"
-                  altFormat="F j, Y H:i"
-                  placeholder="Not set">
-              </td>
-              <td>
-                <input
-                  class="form-control"
-                  type="text"
-                  mwlFlatpickr
-                  [(ngModel)]="event.end"
-                  (ngModelChange)="refresh.next()"
-                  [altInput]="true"
-                  [convertModelValue]="true"
-                  [enableTime]="true"
-                  dateFormat="Y-m-dTH:i"
-                  altFormat="F j, Y H:i"
-                  placeholder="Not set">
+              <td style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; align-items: center; flex-flow: row; justify-content: flex-end; margin-bottom: 2px;">
+                  <h6 style= "flex-basis: 5rem; margin-right: 5px;" >Début</h6>
+                  <input
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.start"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set">
+                </div>
+                <div style="display: flex; align-items: center; flex-flow: row">
+                  <h6 style="flex-basis: 5rem;margin-right: 5px;" >Fin</h6>
+                  <input
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.end"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set">
+                </div>
               </td>
               <td>
                 <textarea
@@ -325,7 +328,7 @@
                   <!--<option value="2">Warning</option>-->
                 <!--</select>-->
               <!--</td>-->
-              <td>
+              <td >
                 <button
                   class="btn btn-danger"
                   (click)="events.splice(index, 1); refresh.next()">
