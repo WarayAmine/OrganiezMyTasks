@@ -119,6 +119,7 @@ export class AppComponent {
         dtstart: subDays(new Date(), 60),
         until: addDays(new Date(), 200),
         // count: 40,
+        interval: 1,
         byweekday: RRule.MO
       }),
     }
