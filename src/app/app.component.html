@@ -307,6 +307,12 @@
                 <!--appliquer la modification avant le refresh.next()-->
                 <div style=" display: flex; flex-flow: column;">
                   <button
+                    style="margin-bottom: 2px;"
+                    class="btn btn-primary"
+                    (click)=" refresh.next()">
+                    Modifier
+                  </button>
+                  <button
                     class="btn btn-danger"
                     (click)="recurringEvents.splice(index, 1); refresh.next()">
                     Supprimer
@@ -402,6 +408,12 @@
               <!--</td>-->
               <td >
                 <div style=" display: flex; flex-flow: column;">
+                  <button
+                    style="margin-bottom: 2px;"
+                    class="btn btn-primary"
+                    (click)=" refresh.next()">
+                    Modifier
+                  </button>
                   <button
                     class="btn btn-danger"
                     (click)="unitaryEvents.splice(index, 1); refresh.next()">
