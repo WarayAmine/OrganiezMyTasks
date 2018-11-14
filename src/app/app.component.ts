@@ -342,4 +342,5 @@ export class AppComponent {
       this.deleteUpdateUnitaryEventTable = !this.deleteUpdateUnitaryEventTable;
     }
   }
+
 }

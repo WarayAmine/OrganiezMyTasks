@@ -42,7 +42,7 @@
   </div>
 </ng-template>
 
-<ng-template #customCellTemplate let-day="day" let-locale="locale">
+<ng-template #customCellTemplate let-day="day" let-locale="locale" >
   <div class="cal-cell-top">
     <span class="cal-day-badge bg-dark " *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
     <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
@@ -91,6 +91,23 @@
         [excludeDays]="excludeDays">
         Suivant
       </div>
+      <ng-template #pop>
+        <div style="display: flex; flex-direction: column; width: 10rem;">
+          <div style="flex-direction: row;">
+          <span class="badge badge-danger" style="width:20px;">0</span> Les erreurs
+          </div>
+          <div style="flex-direction: row;">
+            <span class="badge badge-warning" >0</span> Les averissements
+          </div>
+          <div style="flex-direction: row;">
+            <span class="badge badge-success" >0</span> Les succès
+          </div>
+        </div>
+      </ng-template>
+      <button type="button" style="margin: 1px;" class="btn btn-outline-secondary" placement="bottom"
+              [ngbPopover]="pop">
+        <b>?</b>
+      </button>
     </div>
   </div>
   <div class="col-md-4">
@@ -123,7 +140,6 @@
   </div>
 </div>
 <br>
-
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
@@ -131,7 +147,7 @@
     [events]="events"
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)"
+    (dayClicked)="dayClicked($event.day); "
     (eventClicked)="handleEvent('Clicked', $event.event)"
     (eventTimesChanged)="eventTimesChanged($event)"
     [cellTemplate]="customCellTemplate"
@@ -159,8 +175,8 @@
   </mwl-calendar-day-view>
 </div>
 <br>
-<div class="card " style="margin-left:10px;margin-bottom: 10px;">
-  <h5 class="card-title" style="margin: 5px">Ajouter - Modifier - Supprimer une tâche</h5>
+<div class="card " style="margin: 10px;">
+  <h5 class="card-title" style="margin:10px;">Ajouter - Modifier - Supprimer une tâche</h5>
   <div class="card-body" style="display: flex; flex-direction: column">
     <div class="btn-group " style="display: flex; flex-direction: row; flex-wrap: wrap">
       <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(0)">Ajouter tâche récurrente</button>
@@ -193,10 +209,10 @@
             <tr *ngFor="let event of recurringEvents; let index = index">
               <td>
                 <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="event.title"
-                  (keyup)="refresh.next()">
+                type="text"
+                class="form-control"
+                [(ngModel)]="event.title"
+                (keyup)="refresh.next()">
               </td>
               <!--<td>-->
               <!--<input-->
@@ -212,9 +228,9 @@
               <!--</td>-->
               <td>
                 <textarea
-                  class="form-control"
-                  [(ngModel)]="event.meta.description"
-                  (keyup)="refresh.next()">
+                class="form-control"
+                [(ngModel)]="event.meta.description"
+                (keyup)="refresh.next()">
                 </textarea>
               </td>
               <td >
@@ -222,32 +238,32 @@
                   <div style="display: flex; align-items: center; flex-flow: row; justify-content: flex-end;  margin-bottom: 2px;">
                     <h6 style= "flex-basis: 5rem; margin-right: 2px;" >Début</h6>
                     <input
-                      class="form-control"
-                      type="text"
-                      mwlFlatpickr
-                      [(ngModel)]="event.rrule.all()[0]"
-                      (ngModelChange)="refresh.next()"
-                      [altInput]="true"
-                      [convertModelValue]="true"
-                      [enableTime]="true"
-                      dateFormat="Y-m-dTH:i"
-                      altFormat="F j, Y H:i"
-                      placeholder="Not set">
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.rrule.all()[0]"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set">
                   </div>
                   <div style="display: flex; align-items: center; flex-flow: row; justify-content: flex-end; ">
                     <h6 style="flex-basis: 5rem;margin-right: 2px;" >Fin</h6>
                     <input
-                      class="form-control"
-                      type="text"
-                      mwlFlatpickr
-                      [(ngModel)]="event.rrule.all()[event.rrule.all().length-1]"
-                      (ngModelChange)="refresh.next()"
-                      [altInput]="true"
-                      [convertModelValue]="true"
-                      [enableTime]="true"
-                      dateFormat="Y-m-dTH:i"
-                      altFormat="F j, Y H:i"
-                      placeholder="Not set">
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.rrule.all()[event.rrule.all().length-1]"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set">
                   </div>
                 </div>
               </td>
@@ -307,14 +323,14 @@
                 <!--appliquer la modification avant le refresh.next()-->
                 <div style=" display: flex; flex-flow: column;">
                   <button
-                    style="margin-bottom: 2px;"
-                    class="btn btn-primary"
-                    (click)=" refresh.next()">
+                  style="margin-bottom: 2px;"
+                  class="btn btn-primary"
+                  (click)=" refresh.next()">
                     Modifier
                   </button>
                   <button
-                    class="btn btn-danger"
-                    (click)="recurringEvents.splice(index, 1); refresh.next()">
+                  class="btn btn-danger"
+                  (click)="recurringEvents.splice(index, 1); refresh.next()">
                     Supprimer
                   </button>
                 </div>
