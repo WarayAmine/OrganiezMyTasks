@@ -179,10 +179,10 @@
   <h5 class="card-title" style="margin:10px;">Ajouter - Modifier - Supprimer une tâche</h5>
   <div class="card-body" style="display: flex; flex-direction: column">
     <div class="btn-group " style="display: flex; flex-direction: row; flex-wrap: wrap">
-      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(0)">Ajouter tâche récurrente</button>
-      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(1)">Ajouter tâche unitaire</button>
-      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(2)">Modifier/Supprimer tâche récurrente</button>
-      <button class="btn btn-outline-dark" style="margin: 5px" (click)="toggleForms(3)">Modifier/Supprimer tâche unitaire</button>
+      <button class="btn btn-outline-dark" style="margin: 2px" (click)="toggleForms(0)">Ajouter tâche récurrente</button>
+      <button class="btn btn-outline-dark" style="margin: 2px" (click)="toggleForms(1)">Ajouter tâche unitaire</button>
+      <button class="btn btn-outline-dark" style="margin: 2px" (click)="toggleForms(2)">Modifier/Supprimer tâche récurrente</button>
+      <button class="btn btn-outline-dark" style="margin: 2px" (click)="toggleForms(3)">Modifier/Supprimer tâche unitaire</button>
     </div>
     <div>
       <app-add-recurring-event *ngIf="reccurentEventForm"></app-add-recurring-event>
